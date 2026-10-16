@@ -213,4 +213,26 @@ describe("Autocomplete", () => {
       container.getElementsByClassName("autocomplete__endAdornment").length
     ).toBe(1);
   });
+  test("should show clear button only when enabled", () => {
+    const autocomplete = (disabled: boolean) => (
+      <Autocomplete
+        onChange={() => null}
+        values={mockValues}
+        renderValue={(val) => val.name}
+        value={mockValues[0]}
+        nullable
+        clearable
+        disabled={disabled}
+      />
+    );
+    const { container, rerender } = render(autocomplete(false));
+    expect(
+      container.getElementsByClassName("autocomplete__clear")
+    ).toHaveLength(1);
+
+    rerender(autocomplete(true));
+    expect(
+      container.getElementsByClassName("autocomplete__clear")
+    ).toHaveLength(0);
+  });
 });
